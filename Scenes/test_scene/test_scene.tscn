@@ -55,6 +55,7 @@ player = NodePath("../Player")
 [node name="TestFastNisse" type="CharacterBody2D" parent="Wave_spawner"]
 script = ExtResource("5_dyo71")
 move_speed = 200.0
+attack_damage = 3
 
 [node name="AttackArea" type="Area2D" parent="Wave_spawner/TestFastNisse"]
 
