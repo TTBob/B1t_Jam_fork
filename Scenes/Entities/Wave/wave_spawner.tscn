@@ -1,8 +1,8 @@
 [gd_scene load_steps=3 format=3 uid="uid://bg5dnmvl3g5kn"]
 
 [ext_resource type="Script" uid="uid://c6u8yjbedhcid" path="res://Scenes/Entities/Wave/wave_spawner.gd" id="1_xfdqf"]
-[ext_resource type="PackedScene" uid="uid://dhg2j24i16gvp" path="res://Scenes/characters/Enemies/Basic_Wiz.tscn" id="2_cf8vx"]
+[ext_resource type="PackedScene" uid="uid://nvrkuqr2koh3" path="res://Scenes/characters/Enemies/basic_nisse.tscn" id="2_cf8vx"]
 
 [node name="Wave_spawner" type="Node2D"]
 script = ExtResource("1_xfdqf")
-Basic_Wiz = ExtResource("2_cf8vx")
+Basic_Nisse = ExtResource("2_cf8vx")

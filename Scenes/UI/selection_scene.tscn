@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6vdtlxx4ikmu"]
+
+[ext_resource type="Script" uid="uid://diw4moux0vuo" path="res://Scenes/UI/control.gd" id="1_f2snb"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_f2snb")
+
+[node name="safe_zone" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 620.0
+offset_top = 306.0
+offset_right = 702.0
+offset_bottom = 337.0
+text = "safe zone"
+
+[node name="next_wave" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 525.0
+offset_top = 305.0
+offset_right = 612.0
+offset_bottom = 336.0
+text = "next wave"

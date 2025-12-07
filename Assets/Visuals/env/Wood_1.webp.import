@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8amr73opmobc"
-path="res://.godot/imported/__bg.png-5637fda17171fd3369610d28c864b173.ctex"
+uid="uid://b28js1y5708fv"
+path="res://.godot/imported/Wood_1.webp-f77c6be8096ed1ae78b396c5de38598f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Visuals/Characters/player/__bg.png"
-dest_files=["res://.godot/imported/__bg.png-5637fda17171fd3369610d28c864b173.ctex"]
+source_file="res://Assets/Visuals/env/Wood_1.webp"
+dest_files=["res://.godot/imported/Wood_1.webp-f77c6be8096ed1ae78b396c5de38598f.ctex"]
 
 [params]
 

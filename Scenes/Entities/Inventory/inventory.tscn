@@ -1,9 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://3aw0grq3bkh5"]
+[gd_scene load_steps=10 format=3 uid="uid://3aw0grq3bkh5"]
 
 [ext_resource type="Script" uid="uid://dqe2btn38oj6n" path="res://Scenes/Entities/Inventory/inventory.gd" id="1_7frbc"]
+[ext_resource type="Texture2D" uid="uid://dlvh84tf1qhb1" path="res://Assets/Visuals/UI/1bitjam/Blood droplet.png" id="2_qfemb"]
 [ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="2_uy63a"]
+[ext_resource type="Texture2D" uid="uid://cu0h7r6kl5cfh" path="res://Assets/Visuals/UI/1bitjam/Bone 1.png" id="3_wnhsm"]
+[ext_resource type="Texture2D" uid="uid://cpmsqbhmgo1j0" path="res://Assets/Visuals/UI/1bitjam/Salt.webp" id="4_kk7lb"]
+[ext_resource type="Texture2D" uid="uid://bidkjmtuxwdwb" path="res://Assets/Visuals/UI/1bitjam/Milk.webp" id="5_ed0le"]
+[ext_resource type="Texture2D" uid="uid://ktuibio118rd" path="res://Assets/Visuals/UI/1bitjam/Cooking Meter - Copy.png" id="6_hcsym"]
+[ext_resource type="Texture2D" uid="uid://hhfmkfgn5vhh" path="res://Assets/Visuals/UI/1bitjam/Cooking Meter 3.png" id="7_gt5fw"]
+[ext_resource type="Texture2D" uid="uid://djv6r3r4gqjvw" path="res://Assets/Visuals/UI/1bitjam/Essence.png" id="8_ymwo6"]
 
-[node name="Inventory" type="Control" node_paths=PackedStringArray("blood_count", "bone_count", "salt_name", "salt_amount", "salt_button", "milk_name", "milk_amount", "milk_button", "honey_name", "honey_amount", "honey_button", "oats_name", "oats_amount", "oats_button")]
+[node name="Inventory" type="Control" node_paths=PackedStringArray("blood_count", "bone_count", "salt_name", "salt_amount", "salt_button", "milk_name", "milk_amount", "milk_button", "honey_name", "honey_amount", "honey_button", "oats_name", "oats_amount", "oats_button", "salt_bar", "milk_bar", "honey_bar", "oats_bar")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,132 +32,189 @@ honey_button = NodePath("VBoxContainer/Honey/Button")
 oats_name = NodePath("VBoxContainer/oats/name_of_ingredient")
 oats_amount = NodePath("VBoxContainer/oats/amount")
 oats_button = NodePath("VBoxContainer/oats/Button")
+salt_bar = NodePath("VBoxContainer/Salt/TextureProgressBar")
+milk_bar = NodePath("VBoxContainer/Milk/TextureProgressBar")
+honey_bar = NodePath("VBoxContainer/Honey/TextureProgressBar")
+oats_bar = NodePath("VBoxContainer/oats/TextureProgressBar")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = -446.0
+offset_top = -278.0
+offset_right = 1424.0
+offset_bottom = 1016.0
 
 [node name="Amount_Items" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 698.0
-offset_top = 449.0
-offset_right = 1152.0
-offset_bottom = 639.0
+offset_left = 815.0
+offset_top = 56.0
+offset_right = 1259.0
+offset_bottom = 246.0
+scale = Vector2(0.6, 0.6)
 
 [node name="blood" type="TextureRect" parent="Amount_Items"]
 modulate = Color(0.47788018, 0.47788012, 0.47788012, 1)
 layout_mode = 2
-texture = ExtResource("2_uy63a")
+texture = ExtResource("2_qfemb")
 
 [node name="blood_count" type="RichTextLabel" parent="Amount_Items/blood"]
 layout_mode = 0
-offset_left = 151.0
-offset_top = -354.0
-offset_right = 449.0
-offset_bottom = -314.0
+offset_left = 46.666656
+offset_top = 200.0
+offset_right = 344.66666
+offset_bottom = 240.0
 text = "0"
 
 [node name="bone" type="TextureRect" parent="Amount_Items"]
 modulate = Color(0.8230325, 0.3947942, 0, 1)
 layout_mode = 2
-texture = ExtResource("2_uy63a")
+texture = ExtResource("3_wnhsm")
 
 [node name="bone_count" type="RichTextLabel" parent="Amount_Items/bone"]
 layout_mode = 0
-offset_left = 23.0
-offset_top = -302.0
-offset_right = 317.0
-offset_bottom = -262.0
+offset_left = 106.333275
+offset_top = 191.66666
+offset_right = 400.33328
+offset_bottom = 231.66666
 text = "0"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 6.0
-offset_top = 111.0
-offset_right = 134.0
-offset_bottom = 635.0
+offset_left = 1.9999981
+offset_top = 41.0
+offset_right = 324.0
+offset_bottom = 901.0
+scale = Vector2(0.63, 0.63)
 
 [node name="Salt" type="TextureRect" parent="VBoxContainer"]
 layout_mode = 2
-texture = ExtResource("2_uy63a")
+texture = ExtResource("4_kk7lb")
 
 [node name="amount" type="RichTextLabel" parent="VBoxContainer/Salt"]
 layout_mode = 0
-offset_left = 85.0
-offset_top = 85.0
-offset_right = 526.0
-offset_bottom = 125.0
+offset_left = 377.7778
+offset_top = 190.47618
+offset_right = 818.77783
+offset_bottom = 230.4762
+text = "amount"
 fit_content = true
 
 [node name="name_of_ingredient" type="RichTextLabel" parent="VBoxContainer/Salt"]
 layout_mode = 0
-offset_left = 130.0
-offset_top = 22.0
-offset_right = 558.0
-offset_bottom = 62.0
+offset_left = 379.36508
+offset_top = 53.968254
+offset_right = 807.3651
+offset_bottom = 93.968254
+text = "Salt"
 fit_content = true
 
 [node name="Button" type="Button" parent="VBoxContainer/Salt"]
 layout_mode = 0
-offset_left = 566.0
-offset_top = 62.0
-offset_right = 602.0
-offset_bottom = 93.0
+offset_left = 1085.7144
+offset_top = 130.15874
+offset_right = 1121.7144
+offset_bottom = 161.15874
 text = "salt"
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="VBoxContainer/Salt"]
+layout_mode = 0
+offset_left = 331.74603
+offset_top = 69.84126
+offset_right = 1592.7461
+offset_bottom = 298.8413
+scale = Vector2(0.6, 0.6)
+max_value = 10.0
+texture_under = ExtResource("6_hcsym")
+texture_progress = ExtResource("7_gt5fw")
 
 [node name="Milk" type="TextureRect" parent="VBoxContainer"]
 layout_mode = 2
-texture = ExtResource("2_uy63a")
+texture = ExtResource("5_ed0le")
 
 [node name="amount" type="RichTextLabel" parent="VBoxContainer/Milk"]
 layout_mode = 0
-offset_left = 85.0
-offset_top = 85.0
-offset_right = 550.0
-offset_bottom = 125.0
+offset_left = 377.7778
+offset_top = 190.47618
+offset_right = 842.77783
+offset_bottom = 230.4762
+text = "amount
+"
 fit_content = true
 
 [node name="name_of_ingredient" type="RichTextLabel" parent="VBoxContainer/Milk"]
 layout_mode = 0
-offset_left = 130.0
-offset_top = 22.0
-offset_right = 563.0
-offset_bottom = 62.0
+offset_left = 379.36508
+offset_top = 53.968254
+offset_right = 812.3651
+offset_bottom = 93.968254
+text = "Milk
+"
 fit_content = true
 
 [node name="Button" type="Button" parent="VBoxContainer/Milk"]
 layout_mode = 0
-offset_left = 566.0
-offset_top = 62.0
-offset_right = 608.0
-offset_bottom = 93.0
+offset_left = 1085.7144
+offset_top = 130.15874
+offset_right = 1127.7144
+offset_bottom = 161.15874
 text = "milk
 "
 
+[node name="TextureProgressBar" type="TextureProgressBar" parent="VBoxContainer/Milk"]
+layout_mode = 0
+offset_left = 331.74603
+offset_top = 69.84126
+offset_right = 1592.7461
+offset_bottom = 298.8413
+scale = Vector2(0.6, 0.6)
+max_value = 10.0
+texture_under = ExtResource("6_hcsym")
+texture_progress = ExtResource("7_gt5fw")
+
 [node name="Honey" type="TextureRect" parent="VBoxContainer"]
 layout_mode = 2
-texture = ExtResource("2_uy63a")
+texture = ExtResource("8_ymwo6")
 
 [node name="amount" type="RichTextLabel" parent="VBoxContainer/Honey"]
 layout_mode = 0
-offset_left = 85.0
-offset_top = 85.0
-offset_right = 566.0
-offset_bottom = 125.0
+offset_left = 377.7778
+offset_top = 190.47618
+offset_right = 858.77783
+offset_bottom = 230.4762
+text = "amount
+"
 fit_content = true
 
 [node name="name_of_ingredient" type="RichTextLabel" parent="VBoxContainer/Honey"]
 layout_mode = 0
-offset_left = 130.0
-offset_top = 22.0
-offset_right = 555.0
-offset_bottom = 62.0
+offset_left = 379.36508
+offset_top = 53.968254
+offset_right = 804.3651
+offset_bottom = 93.968254
+text = "Honey
+"
 fit_content = true
 
 [node name="Button" type="Button" parent="VBoxContainer/Honey"]
 layout_mode = 0
-offset_left = 566.0
-offset_top = 62.0
-offset_right = 622.0
-offset_bottom = 93.0
+offset_left = 1085.7144
+offset_top = 130.15874
+offset_right = 1141.7144
+offset_bottom = 161.15874
 text = "honey
 "
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="VBoxContainer/Honey"]
+layout_mode = 0
+offset_left = 331.74603
+offset_top = 69.84126
+offset_right = 1592.7461
+offset_bottom = 298.8413
+scale = Vector2(0.6, 0.6)
+max_value = 10.0
+texture_under = ExtResource("6_hcsym")
+texture_progress = ExtResource("7_gt5fw")
 
 [node name="oats" type="TextureRect" parent="VBoxContainer"]
 layout_mode = 2
@@ -158,25 +222,50 @@ texture = ExtResource("2_uy63a")
 
 [node name="amount" type="RichTextLabel" parent="VBoxContainer/oats"]
 layout_mode = 0
-offset_left = 85.0
-offset_top = 85.0
-offset_right = 543.0
-offset_bottom = 125.0
+offset_left = 377.7778
+offset_top = 190.47618
+offset_right = 835.77783
+offset_bottom = 230.4762
+text = "amount
+"
 fit_content = true
 
 [node name="name_of_ingredient" type="RichTextLabel" parent="VBoxContainer/oats"]
 layout_mode = 0
-offset_left = 130.0
-offset_top = 22.0
-offset_right = 564.0
-offset_bottom = 62.0
+offset_left = 379.36508
+offset_top = 53.968254
+offset_right = 813.3651
+offset_bottom = 93.968254
+text = "Oats"
 fit_content = true
 
 [node name="Button" type="Button" parent="VBoxContainer/oats"]
 layout_mode = 0
-offset_left = 566.0
-offset_top = 62.0
-offset_right = 608.0
-offset_bottom = 93.0
+offset_left = 1085.7144
+offset_top = 130.15874
+offset_right = 1127.7144
+offset_bottom = 161.15874
 text = "oats
 "
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="VBoxContainer/oats"]
+layout_mode = 0
+offset_left = 331.74603
+offset_top = 69.84126
+offset_right = 1592.7461
+offset_bottom = 298.8413
+scale = Vector2(0.6, 0.6)
+max_value = 10.0
+texture_under = ExtResource("6_hcsym")
+texture_progress = ExtResource("7_gt5fw")
+
+[node name="Move_to_cooking_game" type="Button" parent="."]
+layout_mode = 0
+offset_left = 866.0
+offset_top = 319.0
+offset_right = 1049.0
+offset_bottom = 350.0
+text = "move to cooking game
+"
+
+[connection signal="pressed" from="Move_to_cooking_game" to="." method="_on_move_to_cooking_game_pressed"]

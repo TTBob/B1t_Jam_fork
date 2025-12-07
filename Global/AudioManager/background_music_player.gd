@@ -17,7 +17,7 @@ extends AudioStreamPlayer
 
 func _ready() -> void:
 	stream = menu_music
-	play()
+	#play()
 
 func _process(_delta: float) -> void:
 	var duration = get_playback_position() + AudioServer.get_time_since_last_mix()

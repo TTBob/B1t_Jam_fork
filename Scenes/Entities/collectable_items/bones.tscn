@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://55icam7ncwbj"]
+[gd_scene load_steps=4 format=3 uid="uid://55icam7ncwbj"]
+
+[ext_resource type="Texture2D" uid="uid://cu0h7r6kl5cfh" path="res://Assets/Visuals/UI/1bitjam/Bone 1.png" id="1_6rg67"]
 
 [sub_resource type="GDScript" id="GDScript_3w2t7"]
 script/source = "extends Node2D
@@ -17,8 +19,10 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3w2t7"]
+radius = 67.62396
 
 [node name="bones" type="Node2D" groups=["items"]]
+process_mode = 3
 script = SubResource("GDScript_3w2t7")
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -26,8 +30,7 @@ script = SubResource("GDScript_3w2t7")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_3w2t7")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-modulate = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(-10, -1, 0, -10, 9, -1, 0, 9)
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_6rg67")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

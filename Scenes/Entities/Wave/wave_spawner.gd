@@ -8,9 +8,11 @@ extends Node2D
 @export var spawn_radius: float = 300.0
 @export var min_spawn_radius: float = 100.0
 
+@export var safe_scene_path: String = "res://Scenes/UI/selection_scene.tscn"
+
 var enemy_info := {
-	"Basic_Nisse":     {"type": null, "number": 0},
-	"Range_Wiz":     {"type": null, "number": 0},
+	"Basic_Nisse": {"type": null, "number": 0},
+	"Range_Wiz": {"type": null, "number": 0},
 	"Self_Dest_Wiz": {"type": null, "number": 0}
 }
 
@@ -25,53 +27,75 @@ var enemy_info := {
 ]
 
 var current_wave := 0
-var working: bool = false
-var wave_working: bool = true
 var total_to_spawn := 0
 var total_dead := 0
+var wave_working := true   # TRUE → can spawn — FALSE → waiting for player
+
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS   # Detect keys even when "paused"
+	
 	enemy_info["Basic_Nisse"].type = Basic_Nisse
 	enemy_info["Range_Wiz"].type = Range_Wiz
 	enemy_info["Self_Dest_Wiz"].type = Self_Dest_Wiz
-	print("Starting first wave.")
+
+	print("Starting first wave...")
 	start_next_wave()
 
-func _process(_delta):
-	if not wave_working and Input.is_action_just_pressed("ui_accept"):  # Space by default in Godot
-		resume_wave()
+
+func _process(delta):
+	if not wave_working:  # Waiting after wave clear
+		if Input.is_action_just_pressed("ui_accept"):  # SPACE → next wave
+			_continue_wave()
+
+		if Input.is_action_just_pressed("safe_zone"):  # G → Safe Zone
+			_go_to_safe_zone()
+			
+
+# -------------------------------------------------------
+# START + RESUME WAVES
+# -------------------------------------------------------
 
 func start_next_wave():
 	if current_wave >= waves.size():
-		print("All waves finished!")
+		print("All waves finished.")
 		return
 
 	if not wave_working:
-		print("Wave is paused. Waiting for player to resume...")
-		return
+		return  # waiting for player option
 
 	print("\n=== STARTING WAVE:", current_wave + 1, "===")
+
 	_setup_wave(enemy_info, waves[current_wave])
 	_spawn_all_enemies()
+
 	current_wave += 1
 
-func resume_wave():
-	if current_wave >= waves.size():
-		print("All waves finished!")
-		return
-	print("Player resumed the wave.")
+
+func _continue_wave():
+	print("\nContinuing to next wave...")
+	GameData.wave_paused = false
 	wave_working = true
 	start_next_wave()
+
+
+# -------------------------------------------------------
+# SETUP
+# -------------------------------------------------------
 
 func _setup_wave(dict, wave_data):
 	for key in wave_data.keys():
 		dict[key].number = wave_data[key]
-		print("Wave setup:", key, "Number:", wave_data[key])
+		print("Wave setup:", key, "=", wave_data[key])
+
+
+# -------------------------------------------------------
+# SPAWNING
+# -------------------------------------------------------
 
 func _spawn_all_enemies():
-	total_to_spawn = 0
 	total_dead = 0
-	working = true
+	total_to_spawn = 0
 
 	for key in enemy_info.keys():
 		total_to_spawn += enemy_info[key].number
@@ -79,53 +103,53 @@ func _spawn_all_enemies():
 	print("Total enemies to spawn:", total_to_spawn)
 
 	for key in enemy_info.keys():
-		var data = enemy_info[key]
-		if data.type != null and data.number > 0:
-			print("Spawning", data.number, key)
-			_spawn_enemy_type(data.type, data.number)
+		var info = enemy_info[key]
+		if info.type != null and info.number > 0:
+			_spawn_enemy_type(info.type, info.number)
+
 
 func _spawn_enemy_type(scene: PackedScene, count: int):
 	for i in range(count):
-		var e = scene.instantiate()
-		add_child(e)
-		if e.has_signal("is_dead"):
-			e.is_dead.connect(_enemy_died)
-		else:
-			push_warning("Enemy scene does not have 'is_dead' signal!")
-		e.global_position = spawn_position_around_player()
-		print("Spawned enemy at:", e.global_position)
+		var enemy = scene.instantiate()
+		add_child(enemy)
+
+		if enemy.has_signal("is_dead"):
+			enemy.is_dead.connect(_enemy_died)
+
+		enemy.global_position = spawn_position_around_player()
+
+		print("Spawned enemy at:", enemy.global_position)
+
 
 func spawn_position_around_player() -> Vector2:
-	if player == null:
-		push_warning("Spawner: player is not assigned!")
-		return Vector2.ZERO
+	var angle = randf() * TAU
+	var radius = randf_range(min_spawn_radius, spawn_radius)
 
-	var min_distance_between_enemies = 50
-	var max_attempts = 1000
-	var pos: Vector2
+	return player.global_position + Vector2(cos(angle), sin(angle)) * radius
 
-	for attempt in range(max_attempts):
-		var angle = randf() * TAU
-		var radius = randf_range(min_spawn_radius, spawn_radius)
-		pos = player.global_position + Vector2(cos(angle), sin(angle)) * radius
 
-		var safe = true
-		for child in get_children():
-			if child == player:
-				continue
-			if "CharacterBody2D" in child.get_class():
-				if child.global_position.distance_to(pos) < min_distance_between_enemies:
-					safe = false
-					break
-		if safe:
-			return pos
-	return pos
+# -------------------------------------------------------
+# ENEMY DEATH
+# -------------------------------------------------------
 
 func _enemy_died():
 	total_dead += 1
-	print("Enemy died. Total dead:", total_dead, "/", total_to_spawn)
+	print("Enemy died:", total_dead, "/", total_to_spawn)
 
 	if total_dead >= total_to_spawn:
-		working = false
-		wave_working = false  # Pause wave after clearing
-		print("Wave cleared! Press Space to continue...")
+		wave_working = false
+
+		print("\n=== WAVE CLEARED ===")
+		GameData.wave_paused = true  # Stop player + enemy movement
+
+		print("Waiting for SPACE (next wave) or G (safe zone)...")
+
+
+# -------------------------------------------------------
+# SAFE ZONE
+# -------------------------------------------------------
+
+func _go_to_safe_zone():
+	print("Moving to safe zone...")
+	GameData.wave_paused = false
+	get_tree().change_scene_to_file("res://Scenes/Game_Scenes/safe_zone.tscn")
